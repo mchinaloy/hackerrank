@@ -109,9 +109,10 @@ public class HeapSolution {
         int index = 0;
         while(hasLeftChild(index)) {
             int smallerChildIndex = getLeftChildIndex(index);
-            if(hasRightChild(index) && getRightChildIndex(index) < getLeftChild(index)) {
+            if(hasRightChild(index) && getRightChild(index) < getLeftChild(index)) {
                 smallerChildIndex = getRightChildIndex(index);
             }
+            swap(index, smallerChildIndex);
         }
     }
 
