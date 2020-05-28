@@ -9,12 +9,12 @@ public class InsertionSortSolution {
         // O(N^2)
         for(int i = 1; i < arr.length; i++) {
             int numToCompare = arr[i];
-            int preceedingNum = arr[i-1];
-            int indexToCompare = i;
+            int indexToCompare = i-1;
             while(indexToCompare >= 0) {
-                if(numToCompare < preceedingNum) {
-                    arr[i - 1] = numToCompare;
-                    arr[i] = preceedingNum;
+                if(numToCompare < arr[indexToCompare]) {
+                    int temp = arr[indexToCompare];
+                    arr[indexToCompare] = numToCompare;
+                    arr[indexToCompare+1] = temp;
                 }
                 indexToCompare--;
             }
@@ -23,7 +23,7 @@ public class InsertionSortSolution {
     }
 
     public static void main(String[] args) {
-        int[] numbers = {2,1,4,3,7,6};
+        int[] numbers = {2,1,4,12,3,7,9,6};
         int[] result = insertionSort(numbers);
         for(int num : result) {
             System.out.print(num + " ");
