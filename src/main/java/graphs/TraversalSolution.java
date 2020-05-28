@@ -1,6 +1,8 @@
 package graphs;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TraversalSolution {
@@ -17,13 +19,6 @@ public class TraversalSolution {
 
     }
 
-    /*
-     8
-    / \
-   6   9
-  / \   \
-  3  7   10
-     */
     // A, B, C
     static Node DFSInOrder(Node root) {
         if(root.left != null) {
@@ -67,14 +62,30 @@ public class TraversalSolution {
         return root;
     }
 
+    /*
+         8
+        / \
+       6   9
+      / \   \
+     3  7   10
+
+    */
     // 8 6 9 3 7 10
     static Node BFSOrder(Node root) {
-        Set<Node> visited = new HashSet<>();
-        if(visited.contains(root)) {
-
-        } else {
-
+        List<Node> nodesToVisit = new ArrayList<>();
+        nodesToVisit.add(root);
+        while(!nodesToVisit.isEmpty()) {
+            System.out.print(nodesToVisit.get(0).data + " ");
+            Node node = nodesToVisit.get(0);
+            if(node.left != null) {
+                nodesToVisit.add(node.left);
+            }
+            if(node.right != null) {
+                nodesToVisit.add(node.right);
+            }
+            nodesToVisit.remove(0);
         }
+        return root;
     }
 
     static Node insertNode(Node root, int data) {
@@ -121,6 +132,7 @@ public class TraversalSolution {
         System.out.println();
         DFSPostOrder(root);
         System.out.println();
+        BFSOrder(root);
     }
 
 }
