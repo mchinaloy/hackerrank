@@ -1,90 +1,83 @@
 package recursion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EncryptedWordsSolution {
 
     // Add any helper functions you may need here
 
-    static int getMidIndex(char[] splitWord) {
-        int mid = 0;
-        if (splitWord.length % 2 == 0) {
-            mid = (splitWord.length / 2) - 1;
+    static int getMiddleIndex(int length) {
+        int middleIndex;
+        if(length % 2 == 0) {
+            middleIndex = (length / 2) - 1;
         } else {
-            mid = splitWord.length / 2;
+            middleIndex = length / 2;
         }
-        return mid;
+        return middleIndex;
     }
 
-    static char[] populateLeftArray(char[] splitWord, int mid) {
-        char[] left = new char[mid];
-        for (int i = 0; i < mid; i++) {
-            left[i] = splitWord[i];
-        }
-        return left;
-    }
+    // abc = bca
+    // abcd = bacd
+    //  b acd
+    //  a cd = left_arr.length == 1, return
 
-    static char[] populateRightArray(char[] splitWord, int mid) {
-        char[] right = new char[splitWord.length - mid];
-        int index = 0;
-        for (int i = mid; i < splitWord.length; i++) {
-            right[index] = splitWord[i];
-            index++;
-        }
-        return right;
-    }
+    // abcxcba = xbacbca
+    //  x abc cba
+    //  x bac bca
+    // x a bc = left_arr.length == 1, return
 
-    static void printArray(char[] characters) {
-        System.out.println();
-        for (int i = 0; i < characters.length; i++) {
-            System.out.print(characters[i] + " ");
-        }
-        System.out.println();
-    }
+    // facebook = eafcobok
+    // e fac book
+    // e afc obok
+    // f ac = left_arr == 1, return
 
-    // a b c
-    static String encryptWord(String result) {
+    static String encryptWord(String word) {
 
-        char[] splitWord = result.toCharArray();
+        char[] splitWord = word.toCharArray();
 
-        if (splitWord.length == 1) {
-            return String.valueOf(splitWord[0]);
+        int middleIndex = getMiddleIndex(splitWord.length);
+
+        StringBuilder encryptedWord = new StringBuilder();
+        encryptedWord.append(splitWord[middleIndex]);
+
+        List<Character> left = new ArrayList<>();
+        List<Character> right = new ArrayList<>();
+
+        for(int i = 0; i < middleIndex; i++) {
+            left.add(splitWord[i]);
         }
 
-        int mid = getMidIndex(splitWord);
-
-        char[] left = populateLeftArray(splitWord, mid);
-        char[] right = populateRightArray(splitWord, mid);
-
-        printArray(left);
-        printArray(right);
-
-        System.out.println("Left arr length: " + left.length);
-        System.out.println("Right arr length: " + right.length);
-
-        String leftStr = new String(left);
-        String rightStr = new String(right);
-
-        if (left.length > 0) {
-            leftStr = leftStr + encryptWord(leftStr);
-        }
-        if (right.length > 0) {
-            rightStr = rightStr + encryptWord(rightStr);
+        for(int j = middleIndex + 1; j < splitWord.length; j++) {
+            right.add(splitWord[j]);
         }
 
-        System.out.println("Left str is: " + leftStr);
-        System.out.println("Right str is: " + rightStr);
+        if(left.size() > 1) {
+            StringBuilder leftBuilder = new StringBuilder();
+            left.forEach(leftBuilder::append);
+            encryptedWord.append(encryptWord(leftBuilder.toString()));
+        } else if(left.size() == 1) {
+            encryptedWord.append(left.get(0));
+        }
 
-        return String.valueOf(splitWord[mid]) + leftStr.trim() + rightStr.trim();
+        if(right.size() > 1) {
+            StringBuilder rightBuilder = new StringBuilder();
+            right.forEach(rightBuilder::append);
+            encryptedWord.append(encryptWord(rightBuilder.toString()));
+        } else if(right.size() == 1) {
+            encryptedWord.append(right.get(0));
+        }
 
+        return encryptedWord.toString();
     }
 
     static String findEncryptedWord(String s) {
         // Write your code here
-        //
         return encryptWord(s);
     }
 
     public static void main(String[] args) {
-        System.out.println(findEncryptedWord("abcd"));
+        System.out.println(findEncryptedWord("facebook"));
     }
 }
 
