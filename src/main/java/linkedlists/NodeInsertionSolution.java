@@ -22,6 +22,27 @@ public class NodeInsertionSolution {
 
     }
 
+    public static Node deleteNode(Node head, int location) {
+        if(location == 0) {
+            head = head.next;
+            return head;
+        }
+
+        int indexCounter = 0;
+        Node currentNode = head;
+
+        while(currentNode != null) {
+            if(indexCounter + 1 == location) {
+                currentNode.next = currentNode.next.next;
+                break;
+            }
+            currentNode = currentNode.next;
+            indexCounter++;
+        }
+
+        return head;
+    }
+
     public static Node insertNode(Node head, int data, int location) {
         int indexCounter = 0;
         Node currentNode = head;
@@ -57,11 +78,22 @@ public class NodeInsertionSolution {
 
         singlyLinkedList.head = node1;
 
+        System.out.println("Insertion");
         Node currentNode = insertNode(node1, 4, 1);
         while(currentNode != null) {
             System.out.println(currentNode.data);
             currentNode = currentNode.next;
         }
+
+        System.out.println("Deletion");
+        deleteNode(node1, 2);
+
+        Node currentNode2 = node1;
+        while(currentNode2 != null) {
+            System.out.println(currentNode2.data);
+            currentNode2 = currentNode2.next;
+        }
+
     }
 
 }
