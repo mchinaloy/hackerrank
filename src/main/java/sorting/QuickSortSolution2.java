@@ -59,7 +59,7 @@ public class QuickSortSolution2 {
     }
 
     public static void main(String[] args) {
-        int[] numbers = {2, 1, 4, 3, 7, 6, 9, 1, 3, 1, 20};
+        int[] numbers = {8, 5, 2, 9, 5, 6, 3};
 
         System.out.println("Input: ");
         for (int num : numbers) {

@@ -19,6 +19,18 @@ public class TraversalSolution {
 
     }
 
+    // Preorder = root -> left -> right / roots first
+    // Inorder = left -> root -> right / inherent order
+    // Postorder = left -> right -> root / leaves first
+
+    /*
+    pre-order (red): F, B, A, D, C, E, G, I, H;
+    in-order (yellow): A, B, C, D, E, F, G, H, I;
+    post-order (green): A, C, E, D, B, H, I, G, F.
+
+    F == Root
+     */
+
     // A, B, C
     static Node DFSInOrder(Node root) {
         if(root.left != null) {
@@ -37,6 +49,7 @@ public class TraversalSolution {
     // B, A, C
     static Node DFSPreOrder(Node root) {
         System.out.print(root.data + " ");
+
         if(root.left != null) {
             DFSInOrder(root.left);
         }
@@ -126,9 +139,10 @@ public class TraversalSolution {
         root = insertNode(root, 7);
         root = insertNode(root, 9);
         root = insertNode(root, 10);
-        DFSInOrder(root);
-        System.out.println();
+
         DFSPreOrder(root);
+        System.out.println();
+        DFSInOrder(root);
         System.out.println();
         DFSPostOrder(root);
         System.out.println();
